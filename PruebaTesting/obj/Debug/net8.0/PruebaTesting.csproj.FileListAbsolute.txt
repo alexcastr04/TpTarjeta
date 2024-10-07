@@ -1,0 +1,14 @@
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\bin\Debug\net8.0\PruebaTesting.exe
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\bin\Debug\net8.0\PruebaTesting.deps.json
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\bin\Debug\net8.0\PruebaTesting.runtimeconfig.json
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\bin\Debug\net8.0\PruebaTesting.dll
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\bin\Debug\net8.0\PruebaTesting.pdb
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\PruebaTesting.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\PruebaTesting.AssemblyInfoInputs.cache
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\PruebaTesting.AssemblyInfo.cs
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\PruebaTesting.csproj.CoreCompileInputs.cache
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\PruebaTesting.dll
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\refint\PruebaTesting.dll
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\PruebaTesting.pdb
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\PruebaTesting.genruntimeconfig.cache
+C:\Users\ayjca\source\repos\PruebaTesting\PruebaTesting\obj\Debug\net8.0\ref\PruebaTesting.dll
