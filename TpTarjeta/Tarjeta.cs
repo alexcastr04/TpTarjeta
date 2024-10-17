@@ -7,6 +7,7 @@ namespace TransporteUrbano
 
         public decimal Saldo { get; protected set; }
         public decimal DeudaPlus { get; protected set; } = 0; // Monto acumulado en concepto de viaje plus
+        public int CantidadViajesMes { get; protected set; } = 0; // Contador de viajes mensuales
 
         public Tarjeta(decimal saldoInicial = 0)
         {
@@ -22,14 +23,13 @@ namespace TransporteUrbano
                 throw new ArgumentException("Monto de recarga no válido.");
             }
 
-                decimal montoPendiente = 0;
+            decimal montoPendiente = 0;
             if (Saldo + monto > SaldoMaximo)
             {
                 montoPendiente = (Saldo + monto) - SaldoMaximo;
                 monto = SaldoMaximo - Saldo; // Solo acreditamos hasta el máximo permitido
             }
 
-            // Descontar deuda de saldo negativo antes de agregar la recarga
             if (DeudaPlus > 0)
             {
                 decimal deudaRestante = DeudaPlus - monto;
@@ -47,23 +47,22 @@ namespace TransporteUrbano
 
             Saldo += monto;
 
-            // Si hay saldo pendiente, guardarlo para futuras acreditaciones
             if (montoPendiente > 0)
             {
                 Console.WriteLine($"La recarga excedió el saldo máximo. Monto pendiente de acreditación: ${montoPendiente}");
             }
         }
 
-        public void DescontarSaldo(decimal monto)
+        public virtual void DescontarSaldo(decimal monto)
         {
-            if (Saldo < monto)
+            decimal montoDescuento = CalcularDescuento(monto);
+            if (Saldo < montoDescuento)
             {
-                // Permitir saldo negativo para viajes plus hasta un máximo de -480
-                decimal deuda = monto - Saldo;
+                decimal deuda = montoDescuento - Saldo;
                 if (deuda <= 480)
                 {
                     DeudaPlus += deuda;
-                    Saldo = 0; // El saldo queda en 0, y se acumula la deuda
+                    Saldo = 0;
                 }
                 else
                 {
@@ -72,62 +71,73 @@ namespace TransporteUrbano
             }
             else
             {
-                Saldo -= monto;
+                Saldo -= montoDescuento;
             }
+            CantidadViajesMes++;
+        }
+
+        protected virtual decimal CalcularDescuento(decimal monto)
+        {
+            // Descuento basado en la cantidad de viajes mensuales
+            if (CantidadViajesMes >= 30 && CantidadViajesMes <= 79)
+            {
+                return monto * 0.80m; // 20% de descuento
+            }
+            if (CantidadViajesMes == 80)
+            {
+                return monto * 0.75m; // 25% de descuento
+            }
+            return monto; // Tarifa normal
         }
     }
 
-    // Tarjeta con franquicia completa (jubilados, estudiantes con gratuidad)
     public class TarjetaCompleta : Tarjeta
     {
-    private int viajesHoy;
-    private DateTime ultimoViaje;
+        private int viajesHoy;
+        private DateTime ultimoViaje;
 
-    public TarjetaCompleta(decimal saldoInicial = 0) : base(saldoInicial)
-    {
-        viajesHoy = 0;
-        ultimoViaje = DateTime.MinValue;
-    }
-
-    public new void DescontarSaldo(decimal monto)
-    {
-        if (ultimoViaje.Date != DateTime.Now.Date)
+        public TarjetaCompleta(decimal saldoInicial = 0) : base(saldoInicial)
         {
-            viajesHoy = 0; // Resetear el contador de viajes diarios al cambiar el día
+            viajesHoy = 0;
+            ultimoViaje = DateTime.MinValue;
         }
 
-        if (viajesHoy >= 2)
+        public override void DescontarSaldo(decimal monto)
         {
-            throw new InvalidOperationException("Solo se permiten 2 viajes gratis por día.");
+            if (ultimoViaje.Date != DateTime.Now.Date)
+            {
+                viajesHoy = 0;
+            }
+
+            if (viajesHoy >= 2)
+            {
+                throw new InvalidOperationException("Solo se permiten 2 viajes gratis por día.");
+            }
+
+            base.DescontarSaldo(0); // Viaje gratuito
+            viajesHoy++;
+            ultimoViaje = DateTime.Now;
         }
-
-        base.DescontarSaldo(0); // Viaje gratuito
-        viajesHoy++;
-        ultimoViaje = DateTime.Now;
-    }
     }
 
-
-    // Tarjeta con franquicia parcial (medio boleto estudiantil, universitario)
     public class MedioBoleto : Tarjeta
     {
-    private DateTime ultimoViaje;
+        private DateTime ultimoViaje;
 
-    public MedioBoleto(decimal saldoInicial = 0) : base(saldoInicial)
-    {
-        ultimoViaje = DateTime.MinValue;
-    }
-
-    public new void DescontarSaldo(decimal monto)
-    {
-        if ((DateTime.Now - ultimoViaje).TotalMinutes < 5)
+        public MedioBoleto(decimal saldoInicial = 0) : base(saldoInicial)
         {
-            throw new InvalidOperationException("No se puede realizar otro viaje con medio boleto en menos de 5 minutos.");
+            ultimoViaje = DateTime.MinValue;
         }
 
-        base.DescontarSaldo(monto / 2);
-        ultimoViaje = DateTime.Now;
-    }
-    }
+        public override void DescontarSaldo(decimal monto)
+        {
+            if ((DateTime.Now - ultimoViaje).TotalMinutes < 5)
+            {
+                throw new InvalidOperationException("No se puede realizar otro viaje con medio boleto en menos de 5 minutos.");
+            }
 
+            base.DescontarSaldo(monto / 2);
+            ultimoViaje = DateTime.Now;
+        }
+    }
 }
