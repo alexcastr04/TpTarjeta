@@ -1,36 +1,36 @@
-﻿namespace TransporteUrbano
+namespace TransporteUrbano
 {
     public class Colectivo
     {
         private const decimal TarifaBasica = 940;
 
-        public Boleto PagarCon(Tarjeta tarjeta)
+        public Boleto PagarCon(Tarjeta tarjeta, string linea)
         {
-            // Chequear el tipo de tarjeta y aplicar la lógica correspondiente
+                decimal monto;
+                string descripcionExtra = "";
+
             if (tarjeta is MedioBoleto)
             {
-                decimal tarifaMedioBoleto = TarifaBasica / 2;
-                tarjeta.DescontarSaldo(tarifaMedioBoleto);
-                return new Boleto(tarifaMedioBoleto);
+                monto = TarifaBasica / 2;
+                tarjeta.DescontarSaldo(monto);
             }
             else if (tarjeta is TarjetaCompleta)
             {
-                tarjeta.DescontarSaldo(0); // Boleto gratuito
-                return new Boleto(0);
+                monto = 0;
+                tarjeta.DescontarSaldo(monto);
             }
             else
             {
-                // Tarjeta normal sin franquicia
-                if (tarjeta.Saldo >= TarifaBasica)
-                {
-                    tarjeta.DescontarSaldo(TarifaBasica);
-                    return new Boleto(TarifaBasica);
-                }
-                else
-                {
-                    throw new InvalidOperationException("Saldo insuficiente. No se puede realizar el viaje.");
-                }
+                monto = TarifaBasica;
+                tarjeta.DescontarSaldo(monto);
             }
+
+            if (tarjeta.DeudaPlus > 0)
+            {
+                descripcionExtra = $"Abona saldo plus de ${tarjeta.DeudaPlus}";
+            }
+
+            return new Boleto(monto, tarjeta.GetType().Name, linea, tarjeta.Saldo, tarjeta.GetHashCode().ToString(), descripcionExtra);
         }
     }
 }
