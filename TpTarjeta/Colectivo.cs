@@ -2,28 +2,33 @@ namespace TransporteUrbano
 {
     public class Colectivo
     {
-        private const decimal TarifaBasica = 940;
+        private const decimal TarifaBasica = 1200;
+        private const decimal TarifaInterurbana = 2500;
 
-        public Boleto PagarCon(Tarjeta tarjeta, string linea)
+        public Boleto PagarCon(Tarjeta tarjeta, string linea, bool esInterurbana = false)
         {
-                decimal monto;
-                string descripcionExtra = "";
+            decimal monto;
+            string descripcionExtra = "";
 
-            if (tarjeta is MedioBoleto)
+            if (esInterurbana)
             {
-                monto = TarifaBasica / 2;
-                tarjeta.DescontarSaldo(monto);
-            }
-            else if (tarjeta is TarjetaCompleta)
-            {
-                monto = 0;
-                tarjeta.DescontarSaldo(monto);
+                monto = TarifaInterurbana;
             }
             else
             {
                 monto = TarifaBasica;
-                tarjeta.DescontarSaldo(monto);
             }
+
+            if (tarjeta is MedioBoleto)
+            {
+                monto /= 2;
+            }
+            else if (tarjeta is TarjetaCompleta)
+            {
+                monto = 0;
+            }
+
+            tarjeta.DescontarSaldo(monto);
 
             if (tarjeta.DeudaPlus > 0)
             {
@@ -31,6 +36,12 @@ namespace TransporteUrbano
             }
 
             return new Boleto(monto, tarjeta.GetType().Name, linea, tarjeta.Saldo, tarjeta.GetHashCode().ToString(), descripcionExtra);
+        }
+
+        public bool ValidarFranquiciaHorario(DateTime fecha)
+        {
+            return fecha.DayOfWeek != DayOfWeek.Saturday && fecha.DayOfWeek != DayOfWeek.Sunday &&
+                   fecha.TimeOfDay >= new TimeSpan(6, 0, 0) && fecha.TimeOfDay <= new TimeSpan(22, 0, 0);
         }
     }
 }
