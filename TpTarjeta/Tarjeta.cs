@@ -1,8 +1,8 @@
-﻿namespace TransporteUrbano
+namespace TransporteUrbano
 {
     public class Tarjeta
     {
-        private const decimal SaldoMaximo = 9900;
+        private const decimal SaldoMaximo = 36000;
         private static readonly decimal[] RecargasValidas = { 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000 };
 
         public decimal Saldo { get; protected set; }
@@ -22,9 +22,11 @@
                 throw new ArgumentException("Monto de recarga no válido.");
             }
 
+                decimal montoPendiente = 0;
             if (Saldo + monto > SaldoMaximo)
             {
-                throw new InvalidOperationException("La recarga excede el saldo máximo permitido.");
+                montoPendiente = (Saldo + monto) - SaldoMaximo;
+                monto = SaldoMaximo - Saldo; // Solo acreditamos hasta el máximo permitido
             }
 
             // Descontar deuda de saldo negativo antes de agregar la recarga
@@ -39,11 +41,17 @@
                 else
                 {
                     DeudaPlus = deudaRestante;
-                    return; // Si la deuda no se cubre, no se suma saldo a la tarjeta
+                    return;
                 }
             }
 
             Saldo += monto;
+
+            // Si hay saldo pendiente, guardarlo para futuras acreditaciones
+            if (montoPendiente > 0)
+            {
+                Console.WriteLine($"La recarga excedió el saldo máximo. Monto pendiente de acreditación: ${montoPendiente}");
+            }
         }
 
         public void DescontarSaldo(decimal monto)
@@ -72,24 +80,54 @@
     // Tarjeta con franquicia completa (jubilados, estudiantes con gratuidad)
     public class TarjetaCompleta : Tarjeta
     {
-        public TarjetaCompleta(decimal saldoInicial = 0) : base(saldoInicial) { }
+    private int viajesHoy;
+    private DateTime ultimoViaje;
 
-        public new void DescontarSaldo(decimal monto)
-        {
-            // Tarjetas con franquicia completa no pagan
-            Saldo -= 0;
-        }
+    public TarjetaCompleta(decimal saldoInicial = 0) : base(saldoInicial)
+    {
+        viajesHoy = 0;
+        ultimoViaje = DateTime.MinValue;
     }
+
+    public new void DescontarSaldo(decimal monto)
+    {
+        if (ultimoViaje.Date != DateTime.Now.Date)
+        {
+            viajesHoy = 0; // Resetear el contador de viajes diarios al cambiar el día
+        }
+
+        if (viajesHoy >= 2)
+        {
+            throw new InvalidOperationException("Solo se permiten 2 viajes gratis por día.");
+        }
+
+        base.DescontarSaldo(0); // Viaje gratuito
+        viajesHoy++;
+        ultimoViaje = DateTime.Now;
+    }
+    }
+
 
     // Tarjeta con franquicia parcial (medio boleto estudiantil, universitario)
     public class MedioBoleto : Tarjeta
     {
-        public MedioBoleto(decimal saldoInicial = 0) : base(saldoInicial) { }
+    private DateTime ultimoViaje;
 
-        public new void DescontarSaldo(decimal monto)
-        {
-            // El costo del pasaje es la mitad
-            base.DescontarSaldo(monto / 2);
-        }
+    public MedioBoleto(decimal saldoInicial = 0) : base(saldoInicial)
+    {
+        ultimoViaje = DateTime.MinValue;
     }
+
+    public new void DescontarSaldo(decimal monto)
+    {
+        if ((DateTime.Now - ultimoViaje).TotalMinutes < 5)
+        {
+            throw new InvalidOperationException("No se puede realizar otro viaje con medio boleto en menos de 5 minutos.");
+        }
+
+        base.DescontarSaldo(monto / 2);
+        ultimoViaje = DateTime.Now;
+    }
+    }
+
 }
