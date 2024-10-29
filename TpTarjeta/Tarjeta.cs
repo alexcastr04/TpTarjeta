@@ -5,9 +5,9 @@ namespace TransporteUrbano
         private const decimal SaldoMaximo = 36000;
         private static readonly decimal[] RecargasValidas = { 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000 };
 
-        public decimal Saldo { get; protected set; }
-        public decimal DeudaPlus { get; protected set; } = 0; // Monto acumulado en concepto de viaje plus
-        public int CantidadViajesMes { get; protected set; } = 0; // Contador de viajes mensuales
+        public decimal Saldo { get; set; }
+        public decimal DeudaPlus { get; set; } = 0; // Monto acumulado en concepto de viaje plus
+        public int CantidadViajesMes { get; set; } = 0; // Contador de viajes mensuales
 
         public Tarjeta(decimal saldoInicial = 0)
         {
