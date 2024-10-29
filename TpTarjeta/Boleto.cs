@@ -3,7 +3,7 @@ namespace TransporteUrbano
     public class Boleto
     {
         public decimal Monto { get; private set; }
-        public DateTime Fecha { get; private set; }
+        public DateTime Fecha { get; set; }
         public string TipoTarjeta { get; private set; }
         public string LineaColectivo { get; private set; }
         public decimal SaldoRestante { get; private set; }
