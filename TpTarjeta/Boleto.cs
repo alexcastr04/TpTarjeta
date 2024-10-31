@@ -1,4 +1,4 @@
-﻿namespace TransporteUrbano
+namespace TransporteUrbano
 {
     public class Boleto
     {

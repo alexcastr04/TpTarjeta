@@ -1,4 +1,4 @@
-﻿namespace TransporteUrbano
+namespace TransporteUrbano
 {
     public class Colectivo
     {
@@ -37,6 +37,7 @@
 
             return new Boleto(monto, tarjeta.GetType().Name, linea, tarjeta.Saldo, tarjeta.GetHashCode().ToString(), descripcionExtra);
         }
+
         public bool ValidarFranquiciaHorario(DateTime fecha)
         {
             return fecha.DayOfWeek != DayOfWeek.Saturday && fecha.DayOfWeek != DayOfWeek.Sunday &&
