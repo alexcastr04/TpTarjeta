@@ -1,18 +1,25 @@
-﻿namespace TransporteUrbano
+﻿using System;
+using System.Linq;
+
+namespace TransporteUrbano
 {
     public class Tarjeta
     {
-        private const decimal SaldoMaximo = 9900;
+        private const decimal SaldoMaximo = 36000;
         private static readonly decimal[] RecargasValidas = { 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000 };
 
-        public decimal Saldo { get; protected set; }
-        public decimal DeudaPlus { get; protected set; } = 0; // Monto acumulado en concepto de viaje plus
+        public decimal Saldo { get; set; }
+        public decimal DeudaPlus { get; set; } = 0; // Monto acumulado en concepto de viaje plus
+        public decimal SaldoPlus { get; set; } = 0; // Monto adicional cuando se excede el SaldoMaximo
+        public int CantidadViajesMes { get; set; } = 0; // Contador de viajes mensuales
+        private DateTime inicioMes; // Fecha de inicio del mes actual
 
         public Tarjeta(decimal saldoInicial = 0)
         {
             if (saldoInicial > SaldoMaximo)
                 throw new ArgumentException("El saldo inicial no puede exceder el límite de saldo permitido.");
             Saldo = saldoInicial;
+            inicioMes = DateTime.Now; // Establece el inicio del mes como la fecha actual
         }
 
         public void Recargar(decimal monto)
@@ -22,12 +29,7 @@
                 throw new ArgumentException("Monto de recarga no válido.");
             }
 
-            if (Saldo + monto > SaldoMaximo)
-            {
-                throw new InvalidOperationException("La recarga excede el saldo máximo permitido.");
-            }
-
-            // Descontar deuda de saldo negativo antes de agregar la recarga
+            // Ajuste por DeudaPlus
             if (DeudaPlus > 0)
             {
                 decimal deudaRestante = DeudaPlus - monto;
@@ -39,23 +41,55 @@
                 else
                 {
                     DeudaPlus = deudaRestante;
-                    return; // Si la deuda no se cubre, no se suma saldo a la tarjeta
+                    return;
                 }
             }
 
-            Saldo += monto;
+            // Si el saldo más la recarga excede el SaldoMaximo
+            if (Saldo + monto > SaldoMaximo)
+            {
+                SaldoPlus += (Saldo + monto) - SaldoMaximo;
+                Saldo = SaldoMaximo;
+            }
+            else
+            {
+                Saldo += monto;
+            }
+
+            Console.WriteLine($"Recarga realizada. Saldo actual: ${Saldo}. SaldoPlus acumulado: ${SaldoPlus}.");
         }
 
-        public void DescontarSaldo(decimal monto)
+        public void UsarSaldo(decimal monto)
         {
             if (Saldo < monto)
             {
-                // Permitir saldo negativo para viajes plus hasta un máximo de -480
-                decimal deuda = monto - Saldo;
+                throw new InvalidOperationException("Saldo insuficiente.");
+            }
+
+            Saldo -= monto;
+
+            // Si el saldo baja de SaldoMaximo, utilizar SaldoPlus si hay disponible
+            if (Saldo < SaldoMaximo && SaldoPlus > 0)
+            {
+                decimal necesarioParaMaximo = SaldoMaximo - Saldo;
+                decimal montoAUsar = Math.Min(SaldoPlus, necesarioParaMaximo);
+                Saldo += montoAUsar;
+                SaldoPlus -= montoAUsar;
+                Console.WriteLine($"Se ha acreditado ${montoAUsar} del SaldoPlus. Saldo actual: ${Saldo}. SaldoPlus restante: ${SaldoPlus}.");
+            }
+        }
+
+        public virtual void DescontarSaldo(decimal monto)
+        {
+            VerificarInicioDelMes(); // Verifica si se necesita reiniciar el conteo
+            decimal montoDescuento = CalcularDescuento(monto);
+            if (Saldo < montoDescuento)
+            {
+                decimal deuda = montoDescuento - Saldo;
                 if (deuda <= 480)
                 {
                     DeudaPlus += deuda;
-                    Saldo = 0; // El saldo queda en 0, y se acumula la deuda
+                    Saldo = 0;
                 }
                 else
                 {
@@ -64,32 +98,33 @@
             }
             else
             {
-                Saldo -= monto;
+                Saldo -= montoDescuento;
+            }
+            CantidadViajesMes++;
+        }
+
+        private void VerificarInicioDelMes()
+        {
+            // Reiniciar contador al inicio de un nuevo mes
+            if (DateTime.Now.Month != inicioMes.Month || DateTime.Now.Year != inicioMes.Year)
+            {
+                CantidadViajesMes = 0; // Reiniciar el contador de viajes
+                inicioMes = DateTime.Now; // Actualizar la fecha de inicio del mes
             }
         }
-    }
 
-    // Tarjeta con franquicia completa (jubilados, estudiantes con gratuidad)
-    public class TarjetaCompleta : Tarjeta
-    {
-        public TarjetaCompleta(decimal saldoInicial = 0) : base(saldoInicial) { }
-
-        public new void DescontarSaldo(decimal monto)
+        protected virtual decimal CalcularDescuento(decimal monto)
         {
-            // Tarjetas con franquicia completa no pagan
-            Saldo -= 0;
-        }
-    }
-
-    // Tarjeta con franquicia parcial (medio boleto estudiantil, universitario)
-    public class MedioBoleto : Tarjeta
-    {
-        public MedioBoleto(decimal saldoInicial = 0) : base(saldoInicial) { }
-
-        public new void DescontarSaldo(decimal monto)
-        {
-            // El costo del pasaje es la mitad
-            base.DescontarSaldo(monto / 2);
+            // Descuento basado en la cantidad de viajes mensuales
+            if (CantidadViajesMes >= 30 && CantidadViajesMes <= 79)
+            {
+                return monto * 0.80m; // 20% de descuento
+            }
+            if (CantidadViajesMes == 80)
+            {
+                return monto * 0.75m; // 25% de descuento
+            }
+            return monto; // Tarifa normal
         }
     }
 }

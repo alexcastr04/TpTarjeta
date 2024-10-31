@@ -2,35 +2,45 @@
 {
     public class Colectivo
     {
-        private const decimal TarifaBasica = 940;
+        private const decimal TarifaBasica = 1200;
+        private const decimal TarifaInterurbana = 2500;
 
-        public Boleto PagarCon(Tarjeta tarjeta)
+        public Boleto PagarCon(Tarjeta tarjeta, string linea, bool esInterurbana = false)
         {
-            // Chequear el tipo de tarjeta y aplicar la lógica correspondiente
-            if (tarjeta is MedioBoleto)
+            decimal monto;
+            string descripcionExtra = "";
+
+            if (esInterurbana)
             {
-                decimal tarifaMedioBoleto = TarifaBasica / 2;
-                tarjeta.DescontarSaldo(tarifaMedioBoleto);
-                return new Boleto(tarifaMedioBoleto);
-            }
-            else if (tarjeta is TarjetaCompleta)
-            {
-                tarjeta.DescontarSaldo(0); // Boleto gratuito
-                return new Boleto(0);
+                monto = TarifaInterurbana;
             }
             else
             {
-                // Tarjeta normal sin franquicia
-                if (tarjeta.Saldo >= TarifaBasica)
-                {
-                    tarjeta.DescontarSaldo(TarifaBasica);
-                    return new Boleto(TarifaBasica);
-                }
-                else
-                {
-                    throw new InvalidOperationException("Saldo insuficiente. No se puede realizar el viaje.");
-                }
+                monto = TarifaBasica;
             }
+
+            if (tarjeta is MedioBoleto)
+            {
+                monto /= 2;
+            }
+            else if (tarjeta is TarjetaCompleta)
+            {
+                monto = 0;
+            }
+
+            tarjeta.DescontarSaldo(monto);
+
+            if (tarjeta.DeudaPlus > 0)
+            {
+                descripcionExtra = $"Abona saldo plus de ${tarjeta.DeudaPlus}";
+            }
+
+            return new Boleto(monto, tarjeta.GetType().Name, linea, tarjeta.Saldo, tarjeta.GetHashCode().ToString(), descripcionExtra);
+        }
+        public bool ValidarFranquiciaHorario(DateTime fecha)
+        {
+            return fecha.DayOfWeek != DayOfWeek.Saturday && fecha.DayOfWeek != DayOfWeek.Sunday &&
+                   fecha.TimeOfDay >= new TimeSpan(6, 0, 0) && fecha.TimeOfDay <= new TimeSpan(22, 0, 0);
         }
     }
 }
