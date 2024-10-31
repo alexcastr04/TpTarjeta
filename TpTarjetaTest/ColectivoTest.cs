@@ -17,7 +17,7 @@ namespace TpTarjetaTests
 
             Boleto boleto = colectivo.PagarCon(tarjeta, linea, esInterurbana);
 
-            Assert.AreEqual(1200m, boleto.Monto); // Tarifa básica
+            Assert.AreEqual(1200m, boleto.Monto); // Tarifa bÃ¡sica
             Assert.AreEqual("Tarjeta", boleto.TipoTarjeta);
             Assert.AreEqual(linea, boleto.LineaColectivo);
             Assert.AreEqual(800m, boleto.SaldoRestante); // Saldo inicial menos tarifa
@@ -86,7 +86,7 @@ namespace TpTarjetaTests
         public void ValidarFranquiciaHorario_FueraDeHorario_RetornaFalse()
         {
             var colectivo = new Colectivo();
-            DateTime fecha = new DateTime(2024, 10, 23, 23, 0, 0); // Miércoles, 23:00 (fuera de horario)
+            DateTime fecha = new DateTime(2024, 10, 23, 23, 0, 0); // MiÃ©rcoles, 23:00 (fuera de horario)
 
             bool resultado = colectivo.ValidarFranquiciaHorario(fecha);
 
@@ -97,7 +97,7 @@ namespace TpTarjetaTests
         public void ValidarFranquiciaHorario_Sabado_RetornaFalse()
         {
             var colectivo = new Colectivo();
-            DateTime fecha = new DateTime(2024, 10, 26, 9, 0, 0); // Sábado, 9:00 
+            DateTime fecha = new DateTime(2024, 10, 26, 9, 0, 0); // SÃ¡bado, 9:00 
 
             bool resultado = colectivo.ValidarFranquiciaHorario(fecha);
 
@@ -128,7 +128,7 @@ namespace TpTarjetaTests
 
             bool resultado = RealizarViajeConFranquicia(tiempoFalso.Now());
 
-            Assert.IsFalse(resultado, "Se debería haber bloqueado el viaje fuera del horario permitido a las 22:01.");
+            Assert.IsFalse(resultado, "Se deberÃ­a haber bloqueado el viaje fuera del horario permitido a las 22:01.");
 
             // Prueba fuera de horario (05:59)
             tiempoFalso = new TiempoFalso(); // Reinicia tiempoFalso para el segundo caso
@@ -137,7 +137,7 @@ namespace TpTarjetaTests
 
             resultado = RealizarViajeConFranquicia(tiempoFalso.Now());
 
-            Assert.IsFalse(resultado, "Se debería haber bloqueado el viaje fuera del horario permitido a las 05:59.");
+            Assert.IsFalse(resultado, "Se deberÃ­a haber bloqueado el viaje fuera del horario permitido a las 05:59.");
         }
 
 
@@ -149,20 +149,18 @@ namespace TpTarjetaTests
 
             bool resultado = RealizarViajeConFranquicia(tiempoFalso.Now());
 
-            Assert.IsTrue(resultado, "El viaje debería ser permitido dentro del horario.");
+            Assert.IsTrue(resultado, "El viaje deberÃ­a ser permitido dentro del horario.");
 
             // Prueba dentro de horario (21:59)
             tiempoFalso.AgregarHoras(12); // Cambia la hora a 21:59
 
             resultado = RealizarViajeConFranquicia(tiempoFalso.Now());
 
-            Assert.IsTrue(resultado, "El viaje debería ser permitido dentro del horario.");
+            Assert.IsTrue(resultado, "El viaje deberÃ­a ser permitido dentro del horario.");
         }
 
         private bool RealizarViajeConFranquicia(DateTime horaActual)
         {
-            // Lógica simulada para verificar si el viaje puede realizarse
-            // Solo permite el viaje si está entre 6:00 y 22:00
             return horaActual.Hour >= 6 && horaActual.Hour < 22;
         }
     }
