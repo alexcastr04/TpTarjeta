@@ -1,13 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\",
+  "WorkspaceRootPath": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D8F3768-3954-4E32-84DC-A15C093816CE}|TpTarjetaTest\\TpTarjetaTest.csproj|c:\\users\\nico\\source\\repos\\tptarjeta\\tptarjetatest\\tarjetatest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3D8F3768-3954-4E32-84DC-A15C093816CE}|TpTarjetaTest\\TpTarjetaTest.csproj|c:\\users\\nico\\desktop\\backup\\tptarjeta\\tptarjetatest\\colectivotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D8F3768-3954-4E32-84DC-A15C093816CE}|TpTarjetaTest\\TpTarjetaTest.csproj|solutionrelative:tptarjetatest\\colectivotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D8F3768-3954-4E32-84DC-A15C093816CE}|TpTarjetaTest\\TpTarjetaTest.csproj|c:\\users\\nico\\desktop\\backup\\tptarjeta\\tptarjetatest\\tarjetatest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D8F3768-3954-4E32-84DC-A15C093816CE}|TpTarjetaTest\\TpTarjetaTest.csproj|solutionrelative:tptarjetatest\\tarjetatest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E4368A21-DCCB-47F4-A9EB-A3B8AFEC7574}|TpTarjeta\\TpTarjeta.csproj|c:\\users\\nico\\source\\repos\\tptarjeta\\tptarjeta\\tarjeta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E4368A21-DCCB-47F4-A9EB-A3B8AFEC7574}|TpTarjeta\\TpTarjeta.csproj|c:\\users\\nico\\desktop\\backup\\tptarjeta\\tptarjeta\\tarjeta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E4368A21-DCCB-47F4-A9EB-A3B8AFEC7574}|TpTarjeta\\TpTarjeta.csproj|solutionrelative:tptarjeta\\tarjeta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,11 +30,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "ColectivoTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjetaTest\\ColectivoTest.cs",
+              "RelativeDocumentMoniker": "TpTarjetaTest\\ColectivoTest.cs",
+              "ToolTip": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjetaTest\\ColectivoTest.cs",
+              "RelativeToolTip": "TpTarjetaTest\\ColectivoTest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T21:17:36.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Tarjeta.cs",
-              "DocumentMoniker": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjeta\\Tarjeta.cs",
+              "DocumentMoniker": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjeta\\Tarjeta.cs",
               "RelativeDocumentMoniker": "TpTarjeta\\Tarjeta.cs",
-              "ToolTip": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjeta\\Tarjeta.cs",
+              "ToolTip": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjeta\\Tarjeta.cs",
               "RelativeToolTip": "TpTarjeta\\Tarjeta.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAH4AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -38,16 +55,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "TarjetaTest.cs",
-              "DocumentMoniker": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjetaTest\\TarjetaTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjetaTest\\TarjetaTest.cs",
               "RelativeDocumentMoniker": "TpTarjetaTest\\TarjetaTest.cs",
-              "ToolTip": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjetaTest\\TarjetaTest.cs",
+              "ToolTip": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjetaTest\\TarjetaTest.cs",
               "RelativeToolTip": "TpTarjetaTest\\TarjetaTest.cs",
               "ViewState": "AgIAAPMAAAAAAAAAAAAIwAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T22:18:16.276Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-24T22:18:16.276Z"
             }
           ]
         },

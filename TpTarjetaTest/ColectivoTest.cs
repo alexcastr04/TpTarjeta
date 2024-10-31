@@ -161,8 +161,6 @@ namespace TpTarjetaTests
 
         private bool RealizarViajeConFranquicia(DateTime horaActual)
         {
-            // Lógica simulada para verificar si el viaje puede realizarse
-            // Solo permite el viaje si está entre 6:00 y 22:00
             return horaActual.Hour >= 6 && horaActual.Hour < 22;
         }
     }

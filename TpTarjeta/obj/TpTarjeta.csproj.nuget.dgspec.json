@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj": {}
+    "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj": {
+    "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj",
+        "projectUniqueName": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj",
         "projectName": "TpTarjeta",
-        "projectPath": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj",
+        "projectPath": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjeta\\TpTarjeta.csproj",
         "packagesPath": "C:\\Users\\Nico\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nico\\source\\repos\\TpTarjeta\\TpTarjeta\\obj\\",
+        "outputPath": "C:\\Users\\Nico\\Desktop\\Backup\\TpTarjeta\\TpTarjeta\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
