@@ -12,3 +12,4 @@ C:\Users\Nico\source\repos\TpTarjeta\TpTarjeta\obj\Debug\net8.0\refint\TpTarjeta
 C:\Users\Nico\source\repos\TpTarjeta\TpTarjeta\obj\Debug\net8.0\TpTarjeta.pdb
 C:\Users\Nico\source\repos\TpTarjeta\TpTarjeta\obj\Debug\net8.0\TpTarjeta.genruntimeconfig.cache
 C:\Users\Nico\source\repos\TpTarjeta\TpTarjeta\obj\Debug\net8.0\ref\TpTarjeta.dll
+C:\Users\Nico\source\repos\TpTarjeta\TpTarjeta\obj\Debug\net8.0\TpTarjeta.sourcelink.json

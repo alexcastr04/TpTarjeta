@@ -103,3 +103,4 @@ C:\Users\Nico\source\repos\TpTarjeta\TpTarjetaTest\obj\Debug\net8.0\refint\TpTar
 C:\Users\Nico\source\repos\TpTarjeta\TpTarjetaTest\obj\Debug\net8.0\TpTarjetaTest.pdb
 C:\Users\Nico\source\repos\TpTarjeta\TpTarjetaTest\obj\Debug\net8.0\TpTarjetaTest.genruntimeconfig.cache
 C:\Users\Nico\source\repos\TpTarjeta\TpTarjetaTest\obj\Debug\net8.0\ref\TpTarjetaTest.dll
+C:\Users\Nico\source\repos\TpTarjeta\TpTarjetaTest\obj\Debug\net8.0\TpTarjetaTest.sourcelink.json
